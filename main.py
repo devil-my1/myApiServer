@@ -1,11 +1,12 @@
 from fastapi import FastAPI, Response, status,Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 
 app = FastAPI()
+BASE_URL = 'http://185.51.246.205:8000/'
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return RedirectResponse(BASE_URL + 'docs')
 
 @app.get("/items/{item_id}/description")
 async def read_item_description(item_id: int):
