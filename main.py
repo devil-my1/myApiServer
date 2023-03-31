@@ -1,20 +1,13 @@
 from fastapi import FastAPI, Response, status, Request
 from fastapi.responses import JSONResponse, RedirectResponse
-from random import randint
-from Controler import inst_api_manager as iap
-import os
-import openai
+from Controler import inst_api_manager as iam
+from common.logger import logger
 
-
+BASE_URL = "http://185.51.246.205:8000/"
 app = FastAPI()
 
-MY_API_KEY = "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"
-BASE_URL = "http://185.51.246.205:8000/"
 
-
-openai.api_key = MY_API_KEY
-openai.Model.list()
-inst_user: iap.User = None
+inst_user: iam.User = None
 
 
 @app.get("/")
@@ -45,7 +38,7 @@ async def create_item(request: Request):
 @app.get("/inst/get_user/{user_name}")
 async def get_inst_user_info(user_name: str):
     global inst_user
-    inst_user = iap.User(user_name)
+    inst_user = iam.User(user_name)
     return inst_user.user_info()
 
 
@@ -55,3 +48,22 @@ def get_user_stories():
         return inst_user.user_stories()
     else:
         return {"Info": "First check user info to get user stories!"}
+
+
+@app.get("/inst/download_story/")
+async def download_story(url: str = "", story_id: str = ""):
+    """Download instagram story api
+
+    Args:
+        url (str): Story's url
+    """
+    if url:
+        id = url.split("/")[-2]
+        story_id = id if id.isdigit() else story_id
+
+    result = iam.User.download_story(url, story_id)
+    logger.info("Downloaded stories result [%s]", result)
+    status_code = status.HTTP_200_OK
+    if "Error" in result.keys():
+        status_code = status.HTTP_400_BAD_REQUEST
+    return JSONResponse(content=result, status_code=status_code)
