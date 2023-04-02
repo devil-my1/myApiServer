@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Response, status, Request
 from fastapi.responses import JSONResponse, RedirectResponse
-from Controler import inst_api_manager as iam
+from Controler.inst import inst_api_manager as iam
 from common.logger import logger
 
 BASE_URL = "http://185.51.246.205:8000/"
