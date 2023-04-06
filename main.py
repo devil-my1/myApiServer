@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Response, status, Request
 from fastapi.responses import JSONResponse, RedirectResponse
-from Controler.inst import inst_api_manager as iam
+from Controller.inst import inst_api_manager as iam
 from common.logger import logger
-from Controler.anime import anime_api_manager as aam
+from Controller.anime import anime_api_manager as aam
 
 BASE_URL = "http://185.51.246.205:8000/"
 app = FastAPI(
