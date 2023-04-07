@@ -14,7 +14,7 @@ sys.path.append(os.getcwd())
 from common.logger import logger
 
 BASE_URL = "https://zoro.to"
-BASE_PATH = os.path.join(os.getcwd(), "Controler", "anime", "data")
+BASE_PATH = os.path.join(os.getcwd(), "Controller", "anime", "data")
 
 cookies = {
     "cf_clearance": "_zKk_gzfsdKPKF0nyz8YHj6_L.qMug7wW3YFiNstmwQ-1653107896-0-150",
@@ -69,7 +69,7 @@ def check_new_animes(json1, json2):
 
 def save_cache_of_page():
     file_path = os.path.join(
-        BASE_PATH, "html_cache", f"upcoming_html_cache_{date.today()}.html"
+            BASE_PATH, "html_page_cache", f"upcoming_html_cache_{date.today()}.html"
     )
 
     try:
