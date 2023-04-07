@@ -2,3 +2,5 @@ venv/
 __pycache__
 *.log
 .vscode
+Controller/anime/data/*.json
+Controller/anime/data/**/*.html
