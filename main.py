@@ -2,9 +2,9 @@ from fastapi import FastAPI, Response, status, Request
 from fastapi.responses import JSONResponse, RedirectResponse
 from Controller.inst import inst_api_manager as iam
 from common.logger import logger
-from Controller.anime import anime_api_manager as aam
+from Controller.anime.anime_api_manager import AnimeManager
 
-BASE_URL = "http://185.51.246.205:8000/"
+_BASE_URL = "http://185.51.246.205:8000/"
 app = FastAPI(
     title="MultyManager API", description="API for MM system", version="1.0.0"
 )
@@ -15,7 +15,7 @@ inst_user: iam.User = None
 
 @app.get("/")
 async def root():
-    return RedirectResponse(BASE_URL + "docs")
+    return RedirectResponse(_BASE_URL + "docs")
 
 
 @app.get("/items/{item_id}/description")
@@ -32,7 +32,7 @@ async def read_item_description(item_id: int):
 @app.get("/anime/upcoming")
 async def get_upcoming_animes():
     return JSONResponse(
-        content=aam.get_upcoming_animes(), status_code=status.HTTP_200_OK
+        content=AnimeManager().get_upcoming_anime_list(), status_code=status.HTTP_200_OK
     )
 
 
